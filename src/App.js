@@ -4,133 +4,94 @@ import './App.css';
 
 function App() {
   const [showText, setShowText] = useState(true);
-  const [text, setText] = useState('Aline');
+  const [text, setText] = useState('Olá Raposinha');
   const [count, setCount] = useState(0);
+  const [heart, setHeart] = useState(false);
+  const [hearts, setHearts] = useState([]); // Para armazenar os corações da chuva
 
   const handleButtonClick = () => {
     setShowText(false);
+    if (count === 17) {
+      document.querySelector('.button-container').style.display = 'none'; // Esconde o botão
+    }
   };
 
   const changeText = () => {
     switch (count) {
       case 0:
-        setText("Quero que preste atenção");
+        setText("Não queria deixar essa data passar em branco");
         setCount(count + 1);
         break;
       case 1:
-        setText("Tenho uma coisa importante para te falar");
+        setText("Obrigado por esse 1 ano");
         setCount(count + 1);
         break;
       case 2:
-        setText("Eu queria um cachorro quente...");
+        setText("Lembro como se fosse ontem");
         setCount(count + 1);
         break;
       case 3:
-        setText("Mas sei que é difícil pra você");
+        setText("Eu peguei suas mãos");
         setCount(count + 1);
         break;
       case 4:
-        setText("Eu estou sendo muito chato ultimamente");
+        setText("Olhei nos seus olhos");
         setCount(count + 1);
         break;
       case 5:
-        setText("Falando de conhecer seus pais");
+        setText("E te pedi em namoro");
         setCount(count + 1);
         break;
       case 6:
-        setText("Mas eu deixo você fazer isso no seu tempo");
+        setText("De lá até aqui as coisas não foram fáceis");
         setCount(count + 1);
         break;
       case 7:
-        setText("Te amo demais, quero que saiba disso");
+        setText("As nossas vidas mudaram drasticamente");
         setCount(count + 1);
         break;
       case 8:
-        setText("Só queria te ver mais seguido");
-        setCount(count + 1);
-        break; 
-      case 9:
-        setText("Enfim, você tá de saco cheio desse papo já");
-        setCount(count + 1);
-        break; 
-      case 10:
-        setText("Aliás, quero que você se lembre de uma coisa");
-        setCount(count + 1);
-        break;
-      case 11:
-        setText("Quero ver você na formatura do meu lado");
-        setCount(count + 1);
-        break;
-      case 12:
-        setText("E da próxima vez ver você na sua formatura");
-        setCount(count + 1);
-        break;
-      case 8:
-        setText("Sou grudento porque tenho saudade");
+        setText("Não foi fácil passar por tudo isso");
         setCount(count + 1);
         break;
       case 9:
-        setText("Sou tarado porque você me excita");
+        setText("Muitas alegrias, tristezas, brigas");
         setCount(count + 1);
         break;
       case 10:
-        setText("Sou chato porque me preocupo");
+        setText("Experiências únicas juntos");
         setCount(count + 1);
         break;
       case 11:
-        setText("Eu vou trabalhar de dia e você estudar de noite");
+        setText("Passamos por várias coisas");
         setCount(count + 1);
         break;
       case 12:
-        setText("Vai ficar difícil de a gente até mesmo conversar");
+        setText("Incontáveis momentos de aventura juntos");
         setCount(count + 1);
         break;
       case 13:
-        setText("Mas a gente resolve isso como sempre");
+        setText("Queria dizer que gosto sim muito de você");
         setCount(count + 1);
         break;
       case 14:
-        setText("Perceba que não há botão de voltar");
+        setText("Obrigado por esses momentos inesquecíveis");
         setCount(count + 1);
         break;
       case 15:
-        setText("Assim como o tempo não tem volta");
+        setText("Beijo minha gata");
         setCount(count + 1);
         break;
       case 16:
-        setText("A gente não sabe o dia de amanhã");
+        setText("29/09");
         setCount(count + 1);
         break;
       case 17:
-        setText("Portanto vamos aproveitar mais o nosso tempo");
-        setCount(count + 1);
-        break;
-      case 18:
-        setText("Não me importaria de passar o resto dele do seu lado");
-        setCount(count + 1);
-        break;
-      case 19:
-        setText("E como não podia faltar a minha cantada...");
-        setCount(count + 1);
-        break;
-      case 20:
-        setText("Se não der pra ir comer o cachorro quente beleza");
-        setCount(count + 1);
-        break;
-      case 21:
-        setText("A gente pode fazer um caseiro");
-        setCount(count + 1);
-        break;
-      case 22:
-        setText("Eu coloco a minha salsicha no meio do seu pão!");
-        setCount(count + 1);
-        break;
-      case 23:
-        setText("TE AMO!");
-        setCount(count + 1);
+        setHeart(true);
+        setText('');
+        generateHearts(); // Inicia a geração da chuva de corações
         break;
       // Adicione mais casos conforme necessário
-      
     }
     setShowText(true); // Atualiza o estado showText após a transição
   };
@@ -144,22 +105,50 @@ function App() {
     }
   }, [showText]);
 
+  // Função para gerar a chuva de corações
+  const generateHearts = () => {
+    const newHearts = [];
+    for (let i = 0; i < 30; i++) {
+      const randomLeft = Math.random() * 100; // Posição horizontal aleatória
+      const randomDuration = Math.random() * 5 + 2; // Duração aleatória da queda
+      newHearts.push({
+        id: i,
+        left: randomLeft,
+        animationDuration: `${randomDuration}s`
+      });
+    }
+    setHearts(newHearts);
+  };
+
   return (
     <div className="App">
-      <div className='text-container'>
+      <div className="text-container">
         {/* Use CSSTransition para aplicar classes de animação ao texto */}
-        <CSSTransition
-          in={showText}
-          timeout={500}
-          classNames="fade"
-        >
+        <CSSTransition in={showText} timeout={500} classNames="fade">
           <h2>{text}</h2>
         </CSSTransition>
+        {heart && <div id="heart"></div>}
       </div>
-      <div className='button-container'>
-        <div className='button' onClick={handleButtonClick}>
+      <div className="button-container">
+        <div className="button" onClick={handleButtonClick}>
           <span>Avançar</span>
         </div>
+      </div>
+
+      {/* Chuva de corações menores */}
+      <div className="heart-rain-container">
+        {hearts.map((heart) => (
+          <div
+            key={heart.id}
+            className="falling-heart"
+            style={{
+              left: `${heart.left}%`,
+              animationDuration: heart.animationDuration
+            }}
+          >
+            ❤️
+          </div>
+        ))}
       </div>
     </div>
   );
